@@ -14,6 +14,7 @@ import br.com.api.products.convert.ModelMapperConver;
 import br.com.api.products.dto.ProductDTO;
 import br.com.api.products.exceptions.FieldValidationException;
 import br.com.api.products.exceptions.ResourceNotFoundException;
+import br.com.api.products.model.ExceptionModel;
 import br.com.api.products.model.ProductModel;
 import br.com.api.products.repository.ProductRepository;
 
@@ -25,6 +26,9 @@ public class ProductService {
 
     @Autowired
     private ModelMapperConver modelMapperConver;
+
+    @Autowired
+    private ExceptionModel exceptionModel;
 
     public Iterable<ProductDTO> findAll() {
         Iterable<ProductModel> productModels = productRepository.findAllOrderedById();
@@ -70,6 +74,22 @@ public class ProductService {
             return new ResponseEntity<ProductDTO>(updatedDto, HttpStatus.OK);
         } catch (FieldValidationException ex) {
             return new ResponseEntity<String>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (ResourceNotFoundException ex) {
+            return new ResponseEntity<String>(ex.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Internal Server Error");
+        }
+    }
+
+    public ResponseEntity<?> delete(Long id){
+        try {
+            Optional<ProductModel> productVar = productRepository.findById(id);
+            productVar.orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+
+            productRepository.deleteById(id);
+
+            exceptionModel.setMessage("success in removing the product");
+            return new ResponseEntity<ExceptionModel>(exceptionModel, HttpStatus.OK);
         } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<String>(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
