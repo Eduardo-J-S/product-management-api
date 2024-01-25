@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.api.products.dto.ProductDTO;
 import br.com.api.products.service.ProductService;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+
 
 @RestController
 public class ProductController {
@@ -22,7 +26,12 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public ResponseEntity<?> create(@RequestBody ProductDTO product){
-        return productService.create(product);
+    public ResponseEntity<?> create(@RequestBody ProductDTO pDto){
+        return productService.create(pDto);
+    }
+
+    @PutMapping("/products/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody ProductDTO pDto) {        
+        return productService.update(id, pDto);
     }
 }
