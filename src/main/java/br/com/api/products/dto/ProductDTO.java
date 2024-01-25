@@ -11,9 +11,9 @@ public class ProductDTO {
 
     private Long id;
 
-    @GlobalExceptionHandler(message = "Product name is invalid!")
+    @GlobalExceptionHandler()
     private String name;
 
-    @GlobalExceptionHandler(message = "Product brand is invalid!")
+    @GlobalExceptionHandler()
     private String brand;
 }

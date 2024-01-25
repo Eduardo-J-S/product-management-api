@@ -1,4 +1,4 @@
-# Products Api 💻
+# Products Api
 
 The Products API project is a simple application developed in Spring Boot that manages products. Utilizing technologies such as Spring Data JPA, PostgreSQL, and ModelMapper, the API provides functionalities for creating, updating, listing, and deleting products. Additionally, Docker integration facilitates deployment and consistent development across different environments.
 

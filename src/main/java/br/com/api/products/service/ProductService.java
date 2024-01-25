@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 
 import br.com.api.products.convert.ModelMapperConver;
 import br.com.api.products.dto.ProductDTO;
+import br.com.api.products.exceptions.FieldValidationException;
 import br.com.api.products.model.ProductModel;
 import br.com.api.products.repository.ProductRepository;
-import jakarta.validation.Valid;
 
 @Service
 public class ProductService {
@@ -33,8 +33,23 @@ public class ProductService {
         return productDTOs;
     }
 
-    public ResponseEntity<?> create(@Valid ProductDTO product) {
-        var entity = modelMapperConver.parseObject(product, ProductModel.class);
-        return new ResponseEntity<ProductDTO>(modelMapperConver.parseObject(productRepository.save(entity), ProductDTO.class), HttpStatus.CREATED);
+    public ResponseEntity<?> create(ProductDTO product) {
+        try {
+            validateProduct(product);
+            var entity = modelMapperConver.parseObject(product, ProductModel.class);
+            return new ResponseEntity<ProductDTO>(modelMapperConver.parseObject(productRepository.save(entity), ProductDTO.class), HttpStatus.CREATED);
+        } catch (FieldValidationException ex) {
+            return new ResponseEntity<String>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception ex) {
+            return ResponseEntity.status(500).body("Internal Server Error");
+        }
+    }
+    
+    private void validateProduct(ProductDTO product) throws FieldValidationException {
+        if (product.getName().equals("")) {
+            throw new FieldValidationException("Product name is invalid!");
+        } else if (product.getBrand().equals("")) {
+            throw new FieldValidationException("Product brand is invalid!");
+        }
     }
 }

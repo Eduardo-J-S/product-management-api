@@ -14,7 +14,7 @@ import br.com.api.products.exceptions.validator.ExceptionValidator;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface GlobalExceptionHandler {
-    String message() default "Invalid field";
+    String message() default "The string must have at least 3 letters.";
 
     Class<?>[] groups() default {};
 

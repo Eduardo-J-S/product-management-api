@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.api.products.dto.ProductDTO;
 import br.com.api.products.service.ProductService;
-import jakarta.validation.Valid;
 
 @RestController
 public class ProductController {
@@ -23,8 +22,7 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public ResponseEntity<?> create(@Valid @RequestBody ProductDTO product){
+    public ResponseEntity<?> create(@RequestBody ProductDTO product){
         return productService.create(product);
     }
-
 }
