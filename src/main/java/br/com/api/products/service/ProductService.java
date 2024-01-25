@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 
 import br.com.api.products.convert.ModelMapperConver;
 import br.com.api.products.dto.ProductDTO;
@@ -34,17 +33,8 @@ public class ProductService {
         return productDTOs;
     }
 
-    public ResponseEntity<?> create(@Valid ProductDTO product, BindingResult result) {
-        handleValidationErrors(result);
-
+    public ResponseEntity<?> create(@Valid ProductDTO product) {
         var entity = modelMapperConver.parseObject(product, ProductModel.class);
         return new ResponseEntity<ProductDTO>(modelMapperConver.parseObject(productRepository.save(entity), ProductDTO.class), HttpStatus.CREATED);
-    }
-
-    private void handleValidationErrors(BindingResult result) {
-        if (result.hasErrors()) {
-            String errorMessage = result.getAllErrors().get(0).getDefaultMessage();
-            throw new IllegalArgumentException(errorMessage);
-        }
     }
 }

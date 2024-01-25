@@ -2,7 +2,6 @@ package br.com.api.products.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,8 +23,8 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public ResponseEntity<?> create(@Valid @RequestBody ProductDTO product, BindingResult result){
-        return productService.create(product, result);
+    public ResponseEntity<?> create(@Valid @RequestBody ProductDTO product){
+        return productService.create(product);
     }
 
 }

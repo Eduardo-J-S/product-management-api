@@ -1,7 +1,7 @@
 package br.com.api.products.dto;
 
 
-import jakarta.validation.constraints.NotBlank;
+import br.com.api.products.exceptions.GlobalExceptionHandler;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,9 +11,9 @@ public class ProductDTO {
 
     private Long id;
 
-    @NotBlank(message = "Product name is required!")
+    @GlobalExceptionHandler(message = "Product name is invalid!")
     private String name;
 
-    @NotBlank(message = "The brand name is required!")
+    @GlobalExceptionHandler(message = "Product brand is invalid!")
     private String brand;
 }
