@@ -21,8 +21,13 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @GetMapping("/products/{id}")
+    public ResponseEntity<?> findById(@PathVariable Long id) {        
+        return productService.findById(id);
+    }
+
     @GetMapping("/products")
-    public Iterable<ProductDTO> findAll(){
+    public ResponseEntity<?> findAll(){
         return productService.findAll();
     }
 

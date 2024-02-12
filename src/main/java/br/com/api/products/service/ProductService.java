@@ -30,13 +30,32 @@ public class ProductService {
     @Autowired
     private ExceptionModel exceptionModel;
 
-    public Iterable<ProductDTO> findAll() {
-        Iterable<ProductModel> productModels = productRepository.findAllOrderedById();
+    public ResponseEntity<?> findById(Long id) {
+        try {
+            Optional<ProductModel> productVar = productRepository.findById(id);
+            ProductModel product = productVar.orElseThrow(() -> new ResourceNotFoundException("Product not found for ID: " + id));
+    
+            ProductDTO productDTO = modelMapperConver.parseObject(product, ProductDTO.class);
+            return ResponseEntity.ok(productDTO);
+        } catch (ResourceNotFoundException ex) {
+            return new ResponseEntity<String>(ex.getMessage(), HttpStatus.NOT_FOUND); 
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error"); 
+        }
+    }
+    
+
+    public ResponseEntity<?> findAll() {
+        try {
+            Iterable<ProductModel> productModels = productRepository.findAllOrderedById();
         List<ProductDTO> productDTOs = modelMapperConver.parseListObjects(
                 StreamSupport.stream(productModels.spliterator(), false)
                         .collect(Collectors.toList()),
                 ProductDTO.class);
-        return productDTOs;
+                return ResponseEntity.ok(productDTOs);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+        }
     }
 
     public ResponseEntity<?> create(ProductDTO product) {
