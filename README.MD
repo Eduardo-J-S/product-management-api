@@ -1,8 +1,14 @@
-# Products Api
+## English
 
-The Products API project is a simple application developed in Spring Boot that manages products. Utilizing technologies such as Spring Data JPA, PostgreSQL, and ModelMapper, the API provides functionalities for creating, updating, listing, and deleting products. Additionally, Docker integration facilitates deployment and consistent development across different environments.
+[Read in English](README.en.md)
 
-## Technologies Used
+---
+
+# API de Produtos
+
+O projeto da API de Produtos é uma aplicação simples desenvolvida em Spring Boot que gerencia produtos. Utilizando tecnologias como Spring Data JPA, PostgreSQL e ModelMapper, a API fornece funcionalidades para criar, atualizar, listar e excluir produtos. Além disso, a integração com o Docker facilita a implantação e o desenvolvimento consistente em diferentes ambientes.
+
+## Tecnologias Utilizadas
 - Spring Boot
 - Spring Data JPA
 - ModelMapper
@@ -10,14 +16,12 @@ The Products API project is a simple application developed in Spring Boot that m
 - PostgreSQL
 - Docker
 
+## Rotas da API
 
-## API routes
-
-| Routes              | Verb  | Functionality                       |
+| Rotas              | Verbo  | Funcionalidade                       |
 |---------------------|--------|------------------------------------|
-| /products           | GET    | List all products                  |
-| /products/{id}      | GET    | Fetch product details by providing its unique Id           |
-| /products           | POST   | Add a new product to the catalog            |
-| /products/{id}      | PUT    | Update information for the specified product    |
-| /products/{id}      | DELETE | Remove the specified product from the catalog      |
-
+| /produtos           | GET    | Listar todos os produtos                  |
+| /produtos/{id}      | GET    | Buscar detalhes do produto fornecendo seu Id único           |
+| /produtos           | POST   | Adicionar um novo produto ao catálogo            |
+| /produtos/{id}      | PUT    | Atualizar informações para o produto especificado    |
+| /produtos/{id}      | DELETE | Remover o produto especificado do catálogo      |
